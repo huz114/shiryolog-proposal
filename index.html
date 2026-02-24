@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ご提案書 — 営業資料トラッキングツール「シリョログ」</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0c0a09;
+    --bg-card: rgba(255,255,255,.025);
+    --border: rgba(255,255,255,.06);
+    --text: #fafaf9;
+    --text-2: #a8a29e;
+    --text-3: #57534e;
+    --orange: #fb923c;
+    --orange-dark: #ea580c;
+    --green: #34d399;
+    --blue: #60a5fa;
+    --purple: #c084fc;
+    --pink: #f472b6;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Zen Maru Gothic', sans-serif;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === Page wrapper === */
+  .page {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+
+  /* === Header === */
+  .header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--orange);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .header-tag::before,
+  .header-tag::after {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--orange));
+  }
+  .header-tag::after {
+    background: linear-gradient(90deg, var(--orange), transparent);
+  }
+  .header-title {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+  .header-title em {
+    font-style: normal;
+    color: var(--orange);
+  }
+  .header-sub {
+    font-size: 15px;
+    color: var(--text-3);
+  }
+  .header-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-3);
+    margin-top: 20px;
+    letter-spacing: .05em;
+  }
+
+  /* === Sections === */
+  .section {
+    margin-bottom: 64px;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--orange);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--orange), transparent);
+  }
+  .section-title {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .section p {
+    color: var(--text-2);
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+  .section p strong {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  /* === Divider === */
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+    margin: 64px 0;
+  }
+
+  /* === Pain cards === */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .pain-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .pain-card .pain-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  .pain-card .pain-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .pain-card .pain-desc {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+
+  /* === Feature list === */
+  .feat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .feat-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .feat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+  .feat-item:nth-child(1) .feat-dot { background: var(--orange); box-shadow: 0 0 10px rgba(251,146,60,.4); }
+  .feat-item:nth-child(2) .feat-dot { background: var(--green); box-shadow: 0 0 10px rgba(52,211,153,.4); }
+  .feat-item:nth-child(3) .feat-dot { background: var(--blue); box-shadow: 0 0 10px rgba(96,165,250,.4); }
+  .feat-item:nth-child(4) .feat-dot { background: var(--purple); box-shadow: 0 0 10px rgba(192,132,252,.4); }
+  .feat-item:nth-child(5) .feat-dot { background: var(--pink); box-shadow: 0 0 10px rgba(244,114,182,.4); }
+  .feat-item:nth-child(6) .feat-dot { background: var(--orange); box-shadow: 0 0 10px rgba(251,146,60,.4); }
+  .feat-content { flex: 1; }
+  .feat-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .feat-desc {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+  .kw-orange { color: var(--orange); font-weight: 700; }
+  .kw-green { color: var(--green); font-weight: 700; }
+  .kw-blue { color: var(--blue); font-weight: 700; }
+  .kw-purple { color: var(--purple); font-weight: 700; }
+  .kw-pink { color: var(--pink); font-weight: 700; }
+
+  /* === Comparison table === */
+  .table-wrap {
+    overflow-x: auto;
+    margin-top: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead th {
+    background: rgba(255,255,255,.04);
+    text-align: left;
+    padding: 14px 20px;
+    font-weight: 700;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  thead th:first-child {
+    color: var(--text-2);
+    font-weight: 500;
+  }
+  thead th.ours {
+    color: var(--orange);
+  }
+  tbody td {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,.03);
+    color: var(--text-2);
+  }
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+  tbody td:first-child {
+    color: var(--text-2);
+    font-size: 13px;
+  }
+  .check { color: var(--green); font-weight: 700; }
+  .cross { color: #d6d3d1; opacity: .6; }
+  .highlight-cell {
+    color: var(--orange) !important;
+    font-weight: 700;
+  }
+
+  /* === Revenue model === */
+  .model-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .model-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+  }
+  .model-card .model-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .model-card .model-name {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .model-tasks {
+    list-style: none;
+    text-align: left;
+  }
+  .model-tasks li {
+    font-size: 13px;
+    color: var(--text-2);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,.03);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .model-tasks li:last-child { border-bottom: none; }
+  .model-tasks li::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .role-a .model-tasks li::before { background: var(--orange); }
+  .role-b .model-tasks li::before { background: var(--blue); }
+
+  /* === Pricing === */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .price-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+  }
+  .price-card.featured {
+    border-color: rgba(251,146,60,.25);
+    background: rgba(251,146,60,.03);
+  }
+  .price-plan {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-3);
+    margin-bottom: 8px;
+  }
+  .price-card.featured .price-plan {
+    color: var(--orange);
+  }
+  .price-amount {
+    font-family: 'Sora', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .price-amount span {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-3);
+  }
+  .price-note {
+    font-size: 12px;
+    color: var(--text-3);
+    margin-bottom: 16px;
+  }
+  .price-features {
+    list-style: none;
+    text-align: left;
+  }
+  .price-features li {
+    font-size: 13px;
+    color: var(--text-2);
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .price-features li::before {
+    content: '✓';
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* === Timeline === */
+  .timeline {
+    margin-top: 24px;
+    position: relative;
+    padding-left: 28px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--border);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 8px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 2px solid var(--orange);
+    background: var(--bg);
+  }
+  .tl-item.done::before {
+    background: var(--orange);
+  }
+  .tl-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--orange);
+    letter-spacing: .05em;
+    margin-bottom: 4px;
+  }
+  .tl-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .tl-desc {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+
+  /* === Simulation === */
+  .sim-table {
+    margin-top: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .sim-table table { font-size: 14px; }
+  .sim-table thead th {
+    text-align: center;
+  }
+  .sim-table thead th:first-child {
+    text-align: left;
+  }
+  .sim-table tbody td {
+    text-align: center;
+    font-family: 'Sora', sans-serif;
+    font-weight: 500;
+  }
+  .sim-table tbody td:first-child {
+    text-align: left;
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-weight: 500;
+  }
+  .sim-total td {
+    color: var(--orange) !important;
+    font-weight: 700 !important;
+    border-top: 1px solid rgba(251,146,60,.2) !important;
+  }
+
+  /* === CTA === */
+  .cta-section {
+    text-align: center;
+    margin-top: 80px;
+    padding: 48px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+  .cta-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .cta-sub {
+    font-size: 14px;
+    color: var(--text-3);
+    margin-bottom: 28px;
+  }
+  .cta-steps {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+  }
+  .cta-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cta-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(251,146,60,.1);
+    border: 1px solid rgba(251,146,60,.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Sora', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--orange);
+    flex-shrink: 0;
+  }
+  .cta-step-text {
+    font-size: 14px;
+    color: var(--text-2);
+    font-weight: 500;
+  }
+
+  /* === Footer === */
+  .footer {
+    text-align: center;
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-2);
+    margin-bottom: 4px;
+  }
+  .footer-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: .05em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-tag">Partnership Proposal</div>
+    <div class="header-title">
+      営業資料の「その後」を<br><em>データ</em>に変えるツール
+    </div>
+    <div class="header-sub">営業資料トラッキングツール「シリョログ」のご提案</div>
+    <div class="header-date">2026.02.24 — Confidential</div>
+  </div>
+
+  <div class="divider" style="margin: 0 auto 64px;"></div>
+
+  <!-- Section 1: Problem -->
+  <div class="section">
+    <div class="section-label">Problem</div>
+    <div class="section-title">営業資料、送った後どうなってますか？</div>
+    <p>
+      営業マンは提案書の作成に何時間もかけます。<br>
+      でも、<strong>送った後は完全に<span class="kw-orange">ブラックボックス</span></strong>。相手が読んだかどうかすら分からない。
+    </p>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">📨</div>
+        <div class="pain-title">「ご覧いただけましたか？」</div>
+        <div class="pain-desc">資料を送った後、見てもらえたかわからず、追客のタイミングがつかめない</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">📊</div>
+        <div class="pain-title">どこが刺さったか不明</div>
+        <div class="pain-desc">10ページ中、相手が注目したのはどこ？次の商談で何を掘り下げるべき？</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">👥</div>
+        <div class="pain-title">社内で回覧されたか不明</div>
+        <div class="pain-desc">提案書が決裁者に渡っているか？何人が見ているか？全くわからない</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🔄</div>
+        <div class="pain-title">資料改善がカンに頼りがち</div>
+        <div class="pain-desc">「なんとなく」で改善。どのページが読み飛ばされるかデータがない</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 2: Solution -->
+  <div class="section">
+    <div class="section-label">Solution</div>
+    <div class="section-title">シリョログ — 営業資料を「送って終わり」にしない</div>
+    <p>
+      提案書をリンク化して共有するだけ。<strong>いつ、何ページ目を、何秒見たか、何人に回覧されたか</strong>がリアルタイムで可視化されます。
+    </p>
+    <p>
+      <strong>対応フォーマット：</strong><span class="kw-orange">PPTX（パワポ）</span>/ PDF / Googleスライド（リンクからインポート）<br>
+      普段お使いの営業資料をそのままアップロードするだけで使えます。
+    </p>
+
+    <div class="feat-list">
+      <div class="feat-item">
+        <div class="feat-dot"></div>
+        <div class="feat-content">
+          <div class="feat-name">リンク共有 — パワポ・PDFをURLに</div>
+          <div class="feat-desc">PPTX・PDF・Googleスライドをアップロードするだけで、トラッキング付きの共有リンクを生成。<br>パスワード保護・閲覧期限の設定も可能。</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-dot"></div>
+        <div class="feat-content">
+          <div class="feat-name">ページ別閲覧分析</div>
+          <div class="feat-desc">どのページに何秒滞在したかを<span class="kw-green">ヒートマップ</span>で可視化。「刺さったスライド」「飛ばされたスライド」が一目瞭然。</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-dot"></div>
+        <div class="feat-content">
+          <div class="feat-name">リアルタイム通知</div>
+          <div class="feat-desc">相手が資料を開いた瞬間に通知。「<span class="kw-blue">いま見ている</span>」タイミングで電話すれば、接触率が上がる。</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-dot"></div>
+        <div class="feat-content">
+          <div class="feat-name">社内回覧の追跡</div>
+          <div class="feat-desc">リンクが転送され、最初の送付先以外がアクセスした場合も検知。何人に回覧されたか、それぞれ何ページまで読んだかを把握可能。<br>さらに「メールアドレス入力画面」を表示する設定（ON/OFF切替可能）にすれば、誰が見たかをメアドで特定できる。</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-dot"></div>
+        <div class="feat-content">
+          <div class="feat-name">資料パフォーマンスの比較</div>
+          <div class="feat-desc">複数の提案書の閲覧データを比較。「この構成の提案書は最後まで読まれる」が<span class="kw-purple">データで証明</span>される。</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-dot"></div>
+        <div class="feat-content">
+          <div class="feat-name">神野メソッド・スコアリング（将来機能）</div>
+          <div class="feat-desc">神野さんの営業資料メソッドに基づき、資料の構成・閲覧データから<span class="kw-pink">AIが改善ポイントを提案</span>。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 3: Why now -->
+  <div class="section">
+    <div class="section-label">Market</div>
+    <div class="section-title">なぜ今か — 日本市場の空白</div>
+    <p>
+      海外では DocSend（Dropbox）が市場を確立済み。しかし<strong>日本語特化の軽量ツールは<span class="kw-orange">事実上ゼロ</span></strong>。
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="ours">シリョログ</th>
+            <th>DocSend</th>
+            <th>Sales Doc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>日本語UI</td>
+            <td class="check">◎</td>
+            <td class="cross">×（英語のみ）</td>
+            <td class="check">◎</td>
+          </tr>
+          <tr>
+            <td>ページ別滞在時間</td>
+            <td class="check">◎</td>
+            <td class="check">◎</td>
+            <td class="check">○</td>
+          </tr>
+          <tr>
+            <td>営業資料に特化</td>
+            <td class="check">◎</td>
+            <td class="cross">△（汎用）</td>
+            <td class="check">○</td>
+          </tr>
+          <tr>
+            <td>個人〜小規模チーム対応</td>
+            <td class="check">◎</td>
+            <td class="check">○</td>
+            <td class="cross">△（初期10万円）</td>
+          </tr>
+          <tr>
+            <td>月額コスト</td>
+            <td class="highlight-cell">2,980円〜</td>
+            <td>$10〜45/人</td>
+            <td>30,000円〜</td>
+          </tr>
+          <tr>
+            <td>営業資料の専門家監修</td>
+            <td class="check">◎（神野メソッド）</td>
+            <td class="cross">×</td>
+            <td class="cross">×</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top: 16px;">
+      Sales Docは初期費用10万円＋月額3万円〜と中小企業にはハードルが高い。<br>
+      <strong>月額2,980円で使える日本語特化ツール</strong>は、現時点で市場に存在しません。
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 4: For Kanno-san -->
+  <div class="section">
+    <div class="section-label">For You</div>
+    <div class="section-title">神野さんにとっての二重のメリット</div>
+
+    <div class="model-grid">
+      <div class="model-card role-a">
+        <div class="model-role">Benefit 1</div>
+        <div class="model-name" style="color: var(--orange);">レベニューシェア収入</div>
+        <ul class="model-tasks">
+          <li>X（1万フォロワー）やYouTubeで自然に紹介</li>
+          <li>研修受講者にセット提案</li>
+          <li>既存の資料作成クライアントに追加提案</li>
+          <li>ユーザーが増えるほど毎月の収入が積み上がる</li>
+        </ul>
+      </div>
+      <div class="model-card role-b">
+        <div class="model-role">Benefit 2</div>
+        <div class="model-name" style="color: var(--blue);">データが資産になる</div>
+        <ul class="model-tasks">
+          <li>数百社の「見られる資料・見られない資料」データ蓄積</li>
+          <li>研修やコンサルが「エビデンスベース」に進化</li>
+          <li>YouTube: 「1000社のデータでわかった〇〇」コンテンツ</li>
+          <li>次の書籍や講演の独自データソースに</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 5: Role split -->
+  <div class="section">
+    <div class="section-label">Partnership</div>
+    <div class="section-title">役割分担</div>
+
+    <div class="model-grid">
+      <div class="model-card role-a">
+        <div class="model-role">Brand & Marketing</div>
+        <div class="model-name">神野さん</div>
+        <ul class="model-tasks">
+          <li>営業資料メソッドの監修・評価基準策定</li>
+          <li>SNS・YouTube・研修でのプロモーション</li>
+          <li>ユーザーからのフィードバック収集</li>
+          <li>営業資料コンテンツの企画</li>
+        </ul>
+      </div>
+      <div class="model-card role-b">
+        <div class="model-role">Product & Engineering</div>
+        <div class="model-name">宇座 大陽</div>
+        <ul class="model-tasks">
+          <li>プロダクトの設計・開発・運用</li>
+          <li>インフラ・セキュリティ管理</li>
+          <li>カスタマーサポート</li>
+          <li>データ分析基盤の構築</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 6: Pricing -->
+  <div class="section">
+    <div class="section-label">Pricing</div>
+    <div class="section-title">料金プラン（案）</div>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-plan">フリー</div>
+        <div class="price-amount">¥0</div>
+        <div class="price-note">まずは試してみたい方</div>
+        <ul class="price-features">
+          <li>月3件まで共有</li>
+          <li>基本閲覧データ</li>
+          <li>リアルタイム通知</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="price-plan">スタンダード</div>
+        <div class="price-amount">¥2,980<span>/月</span></div>
+        <div class="price-note">個人の営業マン向け</div>
+        <ul class="price-features">
+          <li>無制限の資料共有</li>
+          <li>ページ別ヒートマップ</li>
+          <li>閲覧者の特定</li>
+          <li>パスワード保護</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <div class="price-plan">チーム</div>
+        <div class="price-amount">¥9,800<span>/月</span></div>
+        <div class="price-note">5名まで</div>
+        <ul class="price-features">
+          <li>スタンダード全機能</li>
+          <li>チームダッシュボード</li>
+          <li>資料パフォーマンス比較</li>
+          <li>CSVエクスポート</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 7: Revenue Simulation -->
+  <div class="section">
+    <div class="section-label">Simulation</div>
+    <div class="section-title">収益シミュレーション</div>
+    <p>控えめな仮定での試算。ユーザー獲得は主に神野さんのSNS・研修経由を想定。</p>
+
+    <div class="sim-table">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>3ヶ月目</th>
+            <th>6ヶ月目</th>
+            <th>12ヶ月目</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>フリーユーザー</td>
+            <td>100</td>
+            <td>300</td>
+            <td>800</td>
+          </tr>
+          <tr>
+            <td>有料（スタンダード）</td>
+            <td>15</td>
+            <td>50</td>
+            <td>150</td>
+          </tr>
+          <tr>
+            <td>有料（チーム）</td>
+            <td>2</td>
+            <td>8</td>
+            <td>25</td>
+          </tr>
+          <tr class="sim-total">
+            <td>月額売上</td>
+            <td>¥64,300</td>
+            <td>¥227,400</td>
+            <td>¥692,500</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top: 16px;">
+      12ヶ月目で月額約<span class="kw-orange">70万円</span>。<strong>SaaS型なので一度獲得したユーザーは<span class="kw-green">積み上がり続けます</span></strong>。<br>
+      レベニューシェア比率は別途ご相談させてください。
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 8: Timeline -->
+  <div class="section">
+    <div class="section-label">Roadmap</div>
+    <div class="section-title">開発〜ローンチまでのスケジュール</div>
+
+    <div class="timeline">
+      <div class="tl-item done">
+        <div class="tl-period">Month 1</div>
+        <div class="tl-title">MVP開発</div>
+        <div class="tl-desc">PDF閲覧リンク生成、ページ別閲覧時間トラッキング、基本ダッシュボード</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">Month 2</div>
+        <div class="tl-title">クローズドβ</div>
+        <div class="tl-desc">神野さんの研修受講者10〜20名でテスト利用。フィードバック収集・改善</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">Month 3</div>
+        <div class="tl-title">正式リリース</div>
+        <div class="tl-desc">フリープラン開放。X・YouTubeで告知。有料プラン開始</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">Month 4-6</div>
+        <div class="tl-title">機能拡充</div>
+        <div class="tl-desc">チーム機能、資料比較分析、リアルタイム通知強化、CRM連携</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">Month 7+</div>
+        <div class="tl-title">AI機能追加</div>
+        <div class="tl-desc">閲覧データ×神野メソッドによるAI添削・改善提案機能（案1への拡張）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-title">まずは30分、お話ししませんか？</div>
+    <div class="cta-sub">具体的な進め方やレベニューシェアの条件など、ざっくばらんにご相談できればと思います。</div>
+    <div class="cta-steps">
+      <div class="cta-step">
+        <div class="cta-num">1</div>
+        <div class="cta-step-text">30分ミーティング</div>
+      </div>
+      <div class="cta-step">
+        <div class="cta-num">2</div>
+        <div class="cta-step-text">方向性すり合わせ</div>
+      </div>
+      <div class="cta-step">
+        <div class="cta-num">3</div>
+        <div class="cta-step-text">MVP開発スタート</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-name">宇座 大陽</div>
+    <div class="footer-sub">AI × Business Automation Developer</div>
+  </div>
+
+</div>
+</body>
+</html>
